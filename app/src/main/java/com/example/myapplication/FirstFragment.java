@@ -33,24 +33,37 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button button = view.findViewById(R.id.SubmitButton);
+        Button next_fragment = view.findViewById(R.id.next_fragment);
+        Button submit_button = view.findViewById(R.id.SubmitButton);
         EditText WeightEditText = view.findViewById(R.id.WeightInput);
         EditText HeightEditText = view.findViewById(R.id.HeightInput);
-        RadioButton MaleButton = view.findViewById(R.id.MaleRadio);
+        RadioButton MaleButton = view.findViewById(R.id.MaleRadio_bmr);
         TextView HealthTextView = view.findViewById(R.id.HealthText);
         TextView BMITextView = view.findViewById(R.id.BMI_Result);
 
-        button.setOnClickListener(new View.OnClickListener(){
+        next_fragment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavHostFragment.findNavController(FirstFragment.this)
+                                .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                    }
+        });
+
+        binding.meal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_mealFragment);
+            }
+        });
+
+        submit_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 float weight = Float.parseFloat(WeightEditText.getText().toString());
                 float height = Float.parseFloat(HeightEditText.getText().toString());
 
-                boolean maleChecked = false;
-
-                if (MaleButton.isChecked()){
-                    maleChecked = true;
-                }
+                boolean maleChecked = MaleButton.isChecked();
 
                 height = height/100;
 
