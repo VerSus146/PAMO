@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="101dp"
         android:ems="10"
         android:inputType="number"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/WeightInput" />
 
     <Button
         android:id="@+id/SubmitButton"
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="220dp"
         android:text="Your BMI:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,24 +120,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BMI_Result"
-        app:layout_constraintVertical_bias="0.198" />
+        app:layout_constraintVertical_bias="0.104" />
 
     <Button
         android:id="@+id/next_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="20dp"
         android:text="BMR"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SubmitButton" />
+        app:layout_constraintTop_toBottomOf="@+id/meal" />
 
     <Button
         android:id="@+id/meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="76dp"
         android:text="Today's Meal!"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SubmitButton" />

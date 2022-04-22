@@ -9,14 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import com.example.myapplication.databinding.FragmentFirstBinding;
 import com.example.myapplication.databinding.FragmentHelloBinding;
-
 
 public class HelloFragment extends Fragment {
 
@@ -58,5 +51,20 @@ public class HelloFragment extends Fragment {
             }
         });
 
+        binding.quiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HelloFragment.this)
+                        .navigate(R.id.action_helloFragment_to_quizFragment);
+            }
+        });
+
+        binding.bmiGraphButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HelloFragment.this)
+                        .navigate(R.id.action_helloFragment_to_BMIGraphFragment);
+            }
+        });
     }
 }
