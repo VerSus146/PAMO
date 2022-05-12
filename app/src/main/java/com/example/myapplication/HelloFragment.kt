@@ -1,70 +1,61 @@
-package com.example.myapplication;
+package com.example.myapplication
 
-import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ui.AppBarConfiguration
+import android.os.Bundle
+import androidx.navigation.NavController
+import com.example.myapplication.R
+import androidx.navigation.ui.NavigationUI
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import com.example.myapplication.MealFragment
+import com.example.myapplication.Question
+import com.example.myapplication.QuizFragment
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.example.myapplication.HelloFragment
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.LineGraphSeries
+import com.example.myapplication.BMIGraphFragment
+import com.example.myapplication.databinding.FragmentHelloBinding
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import com.example.myapplication.databinding.FragmentHelloBinding;
-
-public class HelloFragment extends Fragment {
-
-    private FragmentHelloBinding binding;
-
-    public HelloFragment() {
-        // Required empty public constructor
+class HelloFragment : Fragment() {
+    private var binding: FragmentHelloBinding? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
-    public static HelloFragment newInstance(String param1, String param2) {
-        HelloFragment fragment = new HelloFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentHelloBinding.inflate(inflater, container, false)
+        return binding!!.getRoot()
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.Enter?.setOnClickListener {
+            NavHostFragment.findNavController(this@HelloFragment)
+                    .navigate(R.id.action_helloFragment_to_FirstFragment)
+        }
+        binding?.quiz?.setOnClickListener {
+            NavHostFragment.findNavController(this@HelloFragment)
+                    .navigate(R.id.action_helloFragment_to_quizFragment)
+        }
+        binding?.bmiGraphButton?.setOnClickListener {
+            NavHostFragment.findNavController(this@HelloFragment)
+                    .navigate(R.id.action_helloFragment_to_BMIGraphFragment)
+        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        binding = FragmentHelloBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.Enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(HelloFragment.this)
-                        .navigate(R.id.action_helloFragment_to_FirstFragment);
-            }
-        });
-
-        binding.quiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(HelloFragment.this)
-                        .navigate(R.id.action_helloFragment_to_quizFragment);
-            }
-        });
-
-        binding.bmiGraphButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(HelloFragment.this)
-                        .navigate(R.id.action_helloFragment_to_BMIGraphFragment);
-            }
-        });
+    companion object {
+        fun newInstance(param1: String?, param2: String?): HelloFragment? {
+            val fragment = HelloFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

@@ -1,95 +1,75 @@
-package com.example.myapplication;
+package com.example.myapplication
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ui.AppBarConfiguration
+import android.os.Bundle
+import androidx.navigation.NavController
+import com.example.myapplication.R
+import androidx.navigation.ui.NavigationUI
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import com.example.myapplication.MealFragment
+import com.example.myapplication.Question
+import com.example.myapplication.QuizFragment
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.example.myapplication.HelloFragment
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.LineGraphSeries
+import com.example.myapplication.BMIGraphFragment
+import com.example.myapplication.databinding.FragmentMealBinding
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.example.myapplication.databinding.FragmentMealBinding;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-class Meal{
-    private String name;
-    private String description;
-
-    public Meal(String name, String description) {
-        this.name = name;
-        this.description = description;
+internal class Meal(private val name: String?, private val description: String?) {
+    fun getName(): String? {
+        return name
     }
 
-    public String getName() {
-        return name;
+    fun getDescription(): String? {
+        return description
     }
-
-    public String getDescription() {
-        return description;
-    }
-
 }
 
-public class MealFragment extends Fragment {
-
-    private FragmentMealBinding binding;
-
-    public MealFragment() {
-        // Required empty public constructor
+class MealFragment : Fragment() {
+    private var binding: FragmentMealBinding? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
-    public static MealFragment newInstance() {
-        MealFragment fragment = new MealFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentMealBinding.inflate(inflater, container, false)
+        return binding!!.getRoot()
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        run {
+            val recipes: MutableList<String?> = ArrayList()
+            recipes.add("Pizza is a savory dish of Italian origin, consisting of a usually round, flattened base of leavened wheat-based dough topped with tomatoes, cheese, and often various other ingredients (anchovies, olives, meat, etc.) baked at a high temperature, traditionally in a wood-fired oven.")
+            recipes.add("Spaghetti is a type of noodle dish from the Italian cuisine. It is a staple food of Italian cuisine and is often served as an individual serving, as opposed to as part of a main meal.")
+            binding?.BMRMeal?.setOnClickListener {
+                NavHostFragment.findNavController(this@MealFragment)
+                        .navigate(R.id.action_mealFragment_to_SecondFragment)
+            }
+            binding?.BMIMeal?.setOnClickListener {
+                NavHostFragment.findNavController(this@MealFragment)
+                        .navigate(R.id.action_mealFragment_to_FirstFragment)
+            }
+            val random = Random()
+            binding?.RecipeText?.text = recipes[random.nextInt(recipes.size)]
+        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        binding = FragmentMealBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        {
-            List<String> recipes = new ArrayList<>();
-
-
-            recipes.add("Pizza is a savory dish of Italian origin, consisting of a usually round, flattened base of leavened wheat-based dough topped with tomatoes, cheese, and often various other ingredients (anchovies, olives, meat, etc.) baked at a high temperature, traditionally in a wood-fired oven.");
-            recipes.add("Spaghetti is a type of noodle dish from the Italian cuisine. It is a staple food of Italian cuisine and is often served as an individual serving, as opposed to as part of a main meal.");
-
-            binding.BMRMeal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NavHostFragment.findNavController(MealFragment.this)
-                            .navigate(R.id.action_mealFragment_to_SecondFragment);
-                }
-            });
-
-            binding.BMIMeal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NavHostFragment.findNavController(MealFragment.this)
-                            .navigate(R.id.action_mealFragment_to_FirstFragment);
-                }
-            });
-
-            Random random = new Random();
-            binding.RecipeText.setText(recipes.get(random.nextInt(recipes.size())));
+    companion object {
+        fun newInstance(): MealFragment? {
+            val fragment = MealFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

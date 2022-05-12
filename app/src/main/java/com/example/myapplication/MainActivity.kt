@@ -1,69 +1,61 @@
-package com.example.myapplication;
+package com.example.myapplication
 
-import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ui.AppBarConfiguration
+import android.os.Bundle
+import androidx.navigation.NavController
+import com.example.myapplication.R
+import androidx.navigation.ui.NavigationUI
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import com.example.myapplication.MealFragment
+import com.example.myapplication.Question
+import com.example.myapplication.QuizFragment
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.TextView
+import androidx.navigation.Navigation
+import com.example.myapplication.HelloFragment
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.LineGraphSeries
+import com.example.myapplication.BMIGraphFragment
+import com.example.myapplication.databinding.ActivityMainBinding
 
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.myapplication.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class MainActivity extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+class MainActivity : AppCompatActivity() {
+    private var appBarConfiguration: AppBarConfiguration? = null
+    private var binding: ActivityMainBinding? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.getRoot())
+        setSupportActionBar(binding?.toolbar)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+        appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration!!)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        val id = item?.getItemId()
+        return if (id == R.id.action_settings) {
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+        return (appBarConfiguration?.let { NavigationUI.navigateUp(navController, it) } == true
+                || super.onSupportNavigateUp())
     }
 }
